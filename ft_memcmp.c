@@ -1,51 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_charstr.c                                :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-agu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 11:19:28 by rdel-agu          #+#    #+#             */
-/*   Updated: 2021/12/06 19:48:12 by rdel-agu         ###   ########.fr       */
+/*   Created: 2021/11/26 09:16:54 by rdel-agu          #+#    #+#             */
+/*   Updated: 2021/12/01 14:08:59 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_putchar(char c)
-{	
-	return (write(1, &c, 1));
-}
+//This function's goal is to compare two strings from the memory
+//returns an int
 
-int	ft_putstr(char *s)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	i;
+	size_t			i;
+	unsigned char	*cs1;
+	unsigned char	*cs2;
 
 	i = 0;
-	while (s[i])
-		write(1, &s[i++], 1);
-	return (i);
-}
-
-int	ft_cpchar(va_list a)
-{
-	char	c;
-
-	c = (char)va_arg(a, int);
-	return (ft_putchar(c));
-}
-
-int	ft_cpstr(va_list a)
-{
-	int		i;
-	char	*s;
-
-	s = (char *)va_arg(a, int *);
-	if (!s)
+	cs1 = (unsigned char *)s1;
+	cs2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while ((i < n - 1))
 	{
-		ft_putstr("(null)");
-		return (6);
+		if (cs1[i] != cs2[i])
+			return (cs1[i] - cs2[i]);
+		i++;
 	}
-	i = ft_putstr(s);
-	return (i);
+	return (cs1[i] - cs2[i]);
 }
